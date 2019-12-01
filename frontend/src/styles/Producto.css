@@ -1,0 +1,86 @@
+.contenedorProducto {
+  border: 1px solid #D6D6D6;
+  background-color: #fff;
+  padding: 25px;
+  box-shadow: 0px 2px 6px rgba(0,0,0,0.15);
+  max-width: 1400px;
+  overflow:auto; 
+  margin: 0 auto;
+  margin-bottom: 50px;
+  display: flex;
+}
+.contenedorProducto .detalles{
+  position: relative;
+  display: block;
+  padding: 0 25px 25px 0;
+  float: left;
+  width: calc(100% - 350px);
+  height: 100%;
+  max-width: 1050;
+  font-size: 13px;
+  padding-bottom: 20px;
+  border-right: 1px solid #D6D6D6 ;
+}
+.contenedorProducto .detalles h2 {
+  font-size: 22px;
+  color: #333;
+  font-weight: 400;
+  line-height: 1.5;
+  margin-right: 10px;
+}
+.contenedorProducto .detalles .foto{
+  display: flex;
+  height: 75%;
+  position: relative;
+
+}
+.contenedorProducto .detalles .foto img {
+  max-width: 80%;
+  max-height: 400px;
+  display: block;
+  margin: 0 auto;
+}
+.contenedorProducto .preciobox {
+  width: 350px;
+  display: block;
+  padding: 0 0 25px 25px;
+  float: right;
+  position: relative;
+  text-align: center;
+}
+.contenedorProducto .preciobox .valorventa {
+  color: #D1030F;
+  display: block;
+  font-size: 28px;
+  font-weight: 400;
+  line-height: 32px;
+  text-align: center;
+}
+.contenedorProducto .preciobox .valorreal {
+  font-size: 14px;
+    line-height: 24px;
+    display: flex;
+    justify-content: center;
+}
+.contenedorProducto .preciobox .valorreal .precio {
+color: #9E9E9E;
+margin: 0 3px;
+display: inline-block;
+vertical-align: middle;
+text-decoration:line-through;
+}
+.contenedorProducto .preciobox .valorreal .descuento {
+  color: #0F7300;
+  margin: 0 3px;
+  display: inline-block;
+  vertical-align: middle;
+}
+.comprar {
+  font-size: 18px;
+  height: 45px;
+  line-height: 45px;
+  font-weight: 600;
+  white-space: nowrap;
+  color: #FFFFFF;
+  background-color: #0084E0;
+}
