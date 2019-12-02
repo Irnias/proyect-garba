@@ -37,7 +37,6 @@ class Producto extends React.Component {
       return "Loading...";
     }
     const data = this.state.apiResponse;
-    console.log(data)
     return(
       <div className="contenedorProducto">
         <div className="detalles">

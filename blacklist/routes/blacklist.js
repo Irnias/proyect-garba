@@ -78,25 +78,22 @@ const data = {
         } 
       ] 
     };
-
-  app.use(function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "YOUR-DOMAIN.TLD"); // update to match the domain you will make the request from
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    next();
-  });
+    data.items.map((items)=> 
+    items.enabled = 'true'
+    )
+        
+function updateAndGetenable(id,value){
+  const objIndex = data.items.map(e => e.id).indexOf(id);
+  data.items[objIndex].enabled = value
+}
 
 router.get("/", function(req, res, next) {
   res.send(data);
 });
-
+router.get("/products/:id/:value", function(req, res, next) {
+  const id = req.params.id
+  const valor = req.params.value
+  updateAndGetenable(id,valor);
+  res.send(`ID ${id} actualizado!, su nuevo valor es: ${valor}`);
+});
 module.exports = router;
-
-    // fetch("http://garbarino-mock-api.s3-website-us-east-1.amazonaws.com/products/")
-    // .then(res => res.json())
-    // .then(res => this.setState({ dataCruda: res }));
-
-// data.forEach(data => {
-//   data.items['enabled'] = 'true';
-// });
-
-// data.items.forEach((x) => x.enabled = true);
