@@ -1,7 +1,7 @@
 import React from 'react';
-import FullList from '../src/components/FullList';
-import Producto from '../src/components/Producto';
-import NotFound from '../src/components/NotFound';
+import FullList from '../src/components/FullList/FullList';
+import Producto from '../src/components/Producto/Producto';
+import NotFound from '../src/components/NotFound/NotFound';
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 import '../src/styles/App.css';
