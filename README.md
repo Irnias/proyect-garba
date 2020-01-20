@@ -23,3 +23,14 @@ Siendo id: el id del producto y el valor true/false segun correponda actualizar.
 ## 8. Para obtener el listado de todos los productos enabled, utilizar:
 `[GET]localhost:9000/products/`
 Esto sirve para no gastar recursos en traer al front los productos que estan deshabilitados.
+
+
+
+### Funcionalidad extra: 
+- Maneja los acentos en utf-8.
+- Checkea que el item clickeado en la lista general coincida con el de la segunda api.
+- Componente error (en lugar de solo texto)
+
+
+
+Hecho por Ramiro D'Accorso
