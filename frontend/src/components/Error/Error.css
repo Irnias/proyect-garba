@@ -1,0 +1,9 @@
+.Error {
+  padding:30px;
+  margin: 40px auto;
+  background: #F6F6F6;
+  width: 40%;
+  min-width: 400px;
+  max-width: 900px;
+  color: #666666;
+}

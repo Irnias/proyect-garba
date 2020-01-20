@@ -3,7 +3,8 @@ import axios from 'axios';
 import './fulllist.css';
 import NotFound from '../../static/404.jpg'
 import Price from '../Price/Price';
-
+import Error from '../Error/Error';
+import { utf8_decode } from '../../utils';
 export class FullList extends React.Component {
   constructor(props) {
     super(props);
@@ -40,10 +41,14 @@ export class FullList extends React.Component {
       return "Loading...";
     }
     if(this.state.error){
-      return "En este momento no podemos conectarnos! Intente en breve!";
+      return (
+        <Error error="En este momento no podemos conectarnos! Intente en breve!" body="Reintentar!"/>
+      )
     }
     if(this.state.apiResponse.body.length === 0){
-      return "No tenemos productos disponibles, proba mas tarde!";
+      return (
+        <Error error="No tenemos productos disponibles, proba mas tarde!" body="Reintentar!"/>
+      )
     }
 
     return (
@@ -52,7 +57,7 @@ export class FullList extends React.Component {
           {data.body.map((items) => 
             <a className="producto" href={`productos/${items.id}`} key={items.id}>
               <img onError={(e)=>{e.target.onerror = null; e.target.src=NotFound}} src={ items.image_url } alt={ items.description }/>
-              <h2>{ items.description }</h2>
+              <h2>{ utf8_decode(items.description) }</h2>
               <Price price={items.price} list_price={items.list_price} discount={items.discount}/>
             </a>
           )}

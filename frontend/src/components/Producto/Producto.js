@@ -3,6 +3,8 @@ import axios from 'axios';
 import './Producto.css';
 import Price from '../Price/Price';
 import Btn from '../Btn/Btn';
+import Error from '../Error/Error';
+import { utf8_decode } from '../../utils';
 
 class Producto extends React.Component {
 
@@ -11,7 +13,9 @@ class Producto extends React.Component {
     this.state = { 
       apiResponse: '',
       loading: true,
-      userError: null
+      userError: null,
+      currentPrice: 0,
+      currentDesc: ''
    };
   }
 
@@ -21,7 +25,7 @@ class Producto extends React.Component {
     const enabled = await this.checkValidItem();
     // Si esta habilitado, trae el resto de la info del endpoint
     if(enabled){
-      this.fetchData() 
+      this.fetchData();
     }
   }
   
@@ -30,9 +34,11 @@ class Producto extends React.Component {
       //Connecta y trae el valor de "enabled;
       const res = await axios.get(`http://localhost:9000/products/${this.props.match.params.id}`);
       
+
       if(res.data.body.length > 0){
         //Si es true, retorna y continua con la ejecucion, sino actualiza el userError y retorna false.
         if (res.data.body[0].enabled){
+          this.setState({currentDesc: res.data.body[0].description, currentPrice: res.data.body[0].price})
           return true
         }
       }else{
@@ -57,7 +63,12 @@ class Producto extends React.Component {
     try {
       // Conecta y trae el producto pedido
       const res = await axios.get(`https://cors-anywhere.herokuapp.com/http://garbarino-mock-api.s3-website-us-east-1.amazonaws.com/products/${this.props.match.params.id}/`);
-      this.setState({ loading: false, apiResponse: res.data });
+      if( res.data.description === utf8_decode(this.state.currentDesc)){
+        this.setState({ apiResponse: res.data, loading: false,});
+      }else{
+        this.setState({loading: false, error: 'No coinciden los datos', userError: "Esto es embarazoso, parece que lo que buscas no esta disponible."})
+      }
+
     } 
     catch(error) {
       //Si hay error en la conexion, actualiza el userError y finaliza el renderizado de loading.
@@ -71,8 +82,9 @@ class Producto extends React.Component {
       return "Loading...";
     }
     if(this.state.error){
-      //Esto se transformaria en un componente que muestre errores frendly al usuario.
-      return `Esto es embarazoso, parece que hubo un error! ${this.state.userError} `;
+      return (
+        <Error error={this.state.userError} body="VOLVER"/>
+      )
     }
     const data = this.state.apiResponse;
     return(
