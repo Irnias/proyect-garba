@@ -21,7 +21,6 @@ async function updateProducts(id, enabled) {
   const foundProduct = await Model.findOne({
     id: id
   })
-  console.log(foundProduct);
   foundProduct.enabled = enabled;
   const newEnabled = foundProduct.save();
   return newEnabled;

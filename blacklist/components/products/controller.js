@@ -6,16 +6,16 @@ function getProducts(id){
     resolve(store.list(id));
   })
 }
-function getAllProducts(id){
+
+function getAllProducts(){
   
   return new Promise((resolve, reject) => {
-    resolve(store.adminList(id));
+    resolve(store.adminList());
   })
 }
+
 function updateProduct(id,enabled){
   return new Promise(async (resolve, reject) => {
-    console.log(id);
-    console.log(enabled);
     if(!id || !enabled){
       reject('Invalid data');
       return false;

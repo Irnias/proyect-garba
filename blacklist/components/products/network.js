@@ -5,6 +5,7 @@ const router = express.Router();
 
 //Lo que recive el end user.
 router.get('/', function (req,res){
+  console.log("[router]: GET /products solicitado.")
   controller.getProducts(null)
     .then((productList) => {
       response.success(req, res, productList, 200);
@@ -15,6 +16,7 @@ router.get('/', function (req,res){
 });
 //Para no traer toda la lista al end user, solo usamos esta funcion en caso de necesitar la lista completa.
 router.get('/all', function (req,res){
+  console.log("[router]: GET /products/all solicitado.")
   controller.getAllProducts()
     .then((productList) => {
       response.success(req, res, productList, 200);
@@ -25,6 +27,7 @@ router.get('/all', function (req,res){
 });
 
 router.get('/:id', function (req,res){
+  console.log("[router]: GET /products/:id solicitado.")
   controller.getProducts(req.params.id)
   .then((productList) => {
     response.success(req, res, productList, 200);
@@ -34,9 +37,8 @@ router.get('/:id', function (req,res){
   })
 });
 
-
-
 router.patch('/:id', function (req, res) {
+  console.log("[router]: PATCH /products/:id solicitado.")
   controller.updateProduct(req.params.id, req.body.enabled)
     .then((data) => {
       response.success(req, res, data, 200);

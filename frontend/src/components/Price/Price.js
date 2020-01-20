@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './Price.css';
 
 class Price extends Component {
-
+//Recive por props todos los parametros y renderiza.
   render() {
     return (
       <div className="preciobox">

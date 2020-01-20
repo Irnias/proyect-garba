@@ -42,7 +42,7 @@ export class FullList extends React.Component {
     if(this.state.error){
       return "En este momento no podemos conectarnos! Intente en breve!";
     }
-    if(this.state.apiResponse.length === 0){
+    if(this.state.apiResponse.body.length === 0){
       return "No tenemos productos disponibles, proba mas tarde!";
     }
 

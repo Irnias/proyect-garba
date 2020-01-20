@@ -7,6 +7,4 @@ async function connect(uri,options) {
     .catch( (e) => console.error('[db] Error en la coneccion', e))
 }
 
-module.exports = {
-  connect
-}
+module.exports = { connect }

@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import './Producto.css';
 import Price from '../Price/Price';
+import Btn from '../Btn/Btn';
 
 class Producto extends React.Component {
 
@@ -10,57 +11,72 @@ class Producto extends React.Component {
     this.state = { 
       apiResponse: '',
       loading: true,
-      error: null
+      userError: null
    };
   }
-  async componentDidMount(){
-    const enabled = await this.checkValidItem();
 
+  //Funcion principal
+  async componentDidMount(){
+    //Revisa si un item esta o no habilitado
+    const enabled = await this.checkValidItem();
+    // Si esta habilitado, trae el resto de la info del endpoint
     if(enabled){
       this.fetchData() 
-    }else{
-      this.setState(
-        {loading: false, error: "No se encontro el articulo buscado, te invitamos volver a la lista de articulos."}
-      )
     }
   }
   
   async checkValidItem(){
     try {
+      //Connecta y trae el valor de "enabled;
       const res = await axios.get(`http://localhost:9000/products/${this.props.match.params.id}`);
-      if (res.data.body[0].enabled){
-        return true
-      }
-    } catch(error) {
-      this.setState({ loading: false, error })
-    }
       
-    return false;
+      if(res.data.body.length > 0){
+        //Si es true, retorna y continua con la ejecucion, sino actualiza el userError y retorna false.
+        if (res.data.body[0].enabled){
+          return true
+        }
+      }else{
+        this.setState({
+          loading: false,
+          error: "No hay datos!",
+          userError: "No se encontro el articulo buscado, te invitamos volver a la lista de articulos."
+        })
+        return false;
+      }
+    } 
+    //Si hay error en la conexion, actualiza el userError y finaliza el renderizado de loading.
+    catch(error) {
+      this.setState({ loading: false, error, userError: "Hay un problema en la conexion, lo solucionaremos a la brevedad."})
+    }
   }
+
   async fetchData(){
-    
-    this.setState({ loading: true, error: null })
+    //Setea loading true y limpia errores previos.
+    this.setState({ loading: true, error: null})
     
     try {
+      // Conecta y trae el producto pedido
       const res = await axios.get(`https://cors-anywhere.herokuapp.com/http://garbarino-mock-api.s3-website-us-east-1.amazonaws.com/products/${this.props.match.params.id}/`);
-      const data = res.data;
-      this.setState({ loading: false, apiResponse: data });
-    } catch(error) {
-      this.setState({ loading: false, error })
+      this.setState({ loading: false, apiResponse: res.data });
+    } 
+    catch(error) {
+      //Si hay error en la conexion, actualiza el userError y finaliza el renderizado de loading.
+      this.setState({ loading: false, error, userError: "Hay un problema en la conexion, lo solucionaremos a la brevedad." })
     }
       
   }
 
   render(){
-    //Mientras la web este cargando.
     if(this.state.loading){
       return "Loading...";
     }
     if(this.state.error){
-      return `Esto es embarazoso, parece que hubo un error! ${this.state.error} `;
+      //Esto se transformaria en un componente que muestre errores frendly al usuario.
+      return `Esto es embarazoso, parece que hubo un error! ${this.state.userError} `;
     }
     const data = this.state.apiResponse;
     return(
+      <>
       <div className="contenedorProducto">
         <div className="detalles">
           <h2>{data.description}</h2>
@@ -72,11 +88,11 @@ class Producto extends React.Component {
         <div className="preciobox">
           <Price price={data.price } list_price={data.list_price} discount={data.discount}/>
           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In condimentum erat enim, quis convallis elit pellentesque non. Fusce egestas, diam id lobortis molestie, risus nisl laoreet nisi, sit amet finibus tortor diam ut ipsum. Sed ac tempus sapien, et tempus leo. Integer tincidunt a massa quis facilisis. Sed non viverra ante, id eleifend diam. Integer placerat magna quis vestibulum fermentum. Mauris sed mattis libero.</p>
-          <div className="comprar">
-            <span>COMPRAR</span>
-          </div>
+          <Btn to="#" body="COMPRAR"/>
         </div>     
       </div>
+      <Btn to="" body="VOLVER"/>
+      </>
     )
   }
 }

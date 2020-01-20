@@ -18,7 +18,7 @@ class App extends React.Component {
               </Link>
           </div>
         <Switch>
-          <Route exact path="/" component={FullList}/>
+          <Route exact path="/" component={FullList} />
           <Route path="/productos/:id" component={Producto} />
           <Route path='*' component={NotFound} />
         </Switch>
